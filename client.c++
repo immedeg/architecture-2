@@ -5,7 +5,7 @@
 #include <cstring>
 
 const char* FIFO_PATH = "/tmp/chat_fifo";
-const int BUFFER_SIZE = 256;
+const int BUFFER_SIZE = 1024;
 
 void send_message(int fd, const std::string& message) {
     ssize_t bytes_w = write(fd, message.c_str(), message.size());
@@ -30,11 +30,22 @@ std::string receive_message(int fd) {
 
 int main() {
     char buffer[BUFFER_SIZE];
+    
     std::cout << "Client is running. Type 'exit' to quit." << std::endl;
     
     while (true) {
         std::cout << "Enter message: "; 
-        std::cin.getline(buffer, BUFFER_SIZE);              // читаем команду                       // удалить лишние пробелы
+        std::cin.getline(buffer, BUFFER_SIZE);              // читаем команду         
+        std::streamsize bytes_read = std::cin.gcount();
+
+        if (bytes_read < BUFFER_SIZE)
+        { 
+            buffer[bytes_read - 1] = '\0';
+        }
+        else
+        {
+            buffer[bytes_read] = '\0';
+        }
         
         std::string message(buffer);
         int fifo_fd = open(FIFO_PATH, O_WRONLY);            // открываем файл для записи
