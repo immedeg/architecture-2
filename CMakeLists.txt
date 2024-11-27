@@ -7,5 +7,5 @@ set(CMAKE_CXX_STANDARD 11)
 add_executable(server server.c++)
 add_executable(client client.c++)
 
-add_executable(server_sock server.cpp)
-add_executable(client_sock client.cpp)
+add_executable(server_sock server.c++)
+add_executable(client_sock client.c++)
