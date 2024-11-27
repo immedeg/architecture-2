@@ -10,7 +10,7 @@
 
 const char *FIFO_PATH = "/tmp/chat_fifo";
 const char *HISTORY_FILE = "chat_history.txt";
-size_t BUFFER_SIZE = 256;
+size_t BUFFER_SIZE = 1024;
 
 void log_message(const std::string &message)
 {
