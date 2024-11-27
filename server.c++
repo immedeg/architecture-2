@@ -79,7 +79,7 @@ int main(){
     };
 
     if(mkfifo(FIFO_PATH,0666) == -1){ // обработка ошибок при создании
-        if(errno != EEXIST){
+        if(errno != EEXIST){                                         // cerrno.h
              perror("Error creating fifo file");
              return 1;
         }
@@ -100,7 +100,7 @@ int main(){
         }
         
 
-        memset(buffer, 0, BUFFER_SIZE);                             // мб неправильно очистка буфера работает, с запросом длины 0 какие то проблемы
+        memset(buffer, 0, BUFFER_SIZE);                             // cstring.h
         ssize_t bytes_read = read(fifo_fd, buffer, BUFFER_SIZE);    // unistd.h
         if(bytes_read == -1){ // Обработка ошибок записи 
             perror("Error reading fifo file");
@@ -115,9 +115,9 @@ int main(){
         }
         close(fifo_fd);                                             // unistd.h
         
-        if (bytes_read > 0){                                        // исправить для 0
+        if (bytes_read > 0){                              
             
-            if(bytes_read < BUFFER_SIZE){ //преобразование из массива в строку может добавить лишние символы без символа конца строки 
+            if(bytes_read < BUFFER_SIZE){ 
                 buffer[bytes_read] = '\0';
 
             }
